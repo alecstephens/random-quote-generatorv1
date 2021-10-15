@@ -53,13 +53,17 @@ function getRandomQuote() {
 function printQuote() {
   const randomQuote = getRandomQuote();
   const htmlString = `<p class = "quote">${randomQuote.quote}</p>
-                      <p class = "source">${randomQuote.source}
-                        <span class = "citation">${randomQuote.citation}</span>
-                        <span class = "year">${randomQuote.year}</span>
-                      </p>`;
+                      <p class = "source">${randomQuote.source}`
+                      if(quotes[citation]) {
+                        `<span class = "citation">${randomQuote.citation}</span>`
+                      } else if(quotes[year]) {
+                        `<span class = "year">${randomQuote.year}</span>`
+                      }
+                     `</p>`;
+  return htmlString;
 }
-console.log(printQuote());
 
+document.getElementById('quote-box').innerHTML = printQuote(); 
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
