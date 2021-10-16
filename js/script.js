@@ -50,16 +50,28 @@ function getRandomQuote() {
 /***
  * `printQuote` function
 ***/
+let htmlString;
 function printQuote() {
   const randomQuote = getRandomQuote();
-  const htmlString = `<p class = "quote">${randomQuote.quote}</p>
-                      <p class = "source">${randomQuote.source}`
-                      if(quotes[citation]) {
-                        `<span class = "citation">${randomQuote.citation}</span>`
-                      } else if(quotes[year]) {
-                        `<span class = "year">${randomQuote.year}</span>`
-                      }
-                     `</p>`;
+  const quoteString = `<p class = "quote">${randomQuote.quote}</p>`;
+  let sourceString = `<p class = "source">${randomQuote.source}
+                        <span class = "citation">${randomQuote.citation}</span>
+                        <span class = "year">${randomQuote.year}</span>
+                      </p>`;
+  if(quotes.some(quotes => quotes.citation)) {
+    sourceString = `<p class = "source">${randomQuote.source}
+                      <span class = "citation">${randomQuote.citation}</span>
+                    </p>`;
+    htmlString = quoteString + sourceString;  
+  } else if(quotes.some(quotes => quotes.year)) {
+    sourceString = `<p class = "source">${randomQuote.source}
+                      <span class = "year">${randomQuote.year}</span>
+                    </p>`;
+    htmlString = quoteString + sourceString;
+  } else {
+    sourceString = `<p class = "source">${randomQuote.source}</p>`;
+    htmlString = quoteString + sourceString;                    
+  }                    
   return htmlString;
 }
 
