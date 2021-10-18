@@ -26,7 +26,8 @@ const quotes = [
   {
     quote: 'You miss 100 percent of the shots you never take.',
     source: 'Wayne Gretzky',
-    citation: '1983 interview with Bob McKenzie'
+    citation: '1983 interview with Bob McKenzie',
+    tags: 'Sports'
   },
   {
     quote: 'A great man is always willing to be little',
@@ -35,7 +36,8 @@ const quotes = [
   },
   {
     quote: 'Those who dare to fail miserably can achieve greatly.',
-    source: 'John F. Kennedy'
+    source: 'John F. Kennedy',
+    tags: 'Politics'
   }
 ];
 
@@ -50,32 +52,47 @@ function getRandomQuote() {
 /***
  * `printQuote` function
 ***/
-let htmlString;
 function printQuote() {
-  const randomQuote = getRandomQuote();
-  const quoteString = `<p class = "quote">${randomQuote.quote}</p>`;
-  let sourceString = `<p class = "source">${randomQuote.source}
-                        <span class = "citation">${randomQuote.citation}</span>
-                        <span class = "year">${randomQuote.year}</span>
-                      </p>`;
-  if(quotes.some(quotes => quotes.citation)) {
-    sourceString = `<p class = "source">${randomQuote.source}
-                      <span class = "citation">${randomQuote.citation}</span>
-                    </p>`;
-    htmlString = quoteString + sourceString;  
-  } else if(quotes.some(quotes => quotes.year)) {
-    sourceString = `<p class = "source">${randomQuote.source}
-                      <span class = "year">${randomQuote.year}</span>
-                    </p>`;
-    htmlString = quoteString + sourceString;
-  } else {
-    sourceString = `<p class = "source">${randomQuote.source}</p>`;
-    htmlString = quoteString + sourceString;                    
-  }                    
-  return htmlString;
+  let randomQuote = getRandomQuote();
+  let quoteString = `<p class="quote">${randomQuote.quote}</p>
+                     <p class="source">${randomQuote.source}`;
+
+  if(randomQuote.citation) {
+    quoteString += `<span class="citation"> ${randomQuote.citation}</span>`;
+  } 
+  
+  if(randomQuote.year) {
+    quoteString += `<span class="year"> ${randomQuote.year}</span>`;
+  } 
+  
+  if(randomQuote.tags){
+    quoteString += `<span class="citation"> ${randomQuote.tags}</span>`;
+  }
+
+    quoteString += '</p>';
+
+  return quoteString
 }
 
-document.getElementById('quote-box').innerHTML = printQuote(); 
+function getRandomColor() {
+  let x = Math.floor(Math.random() * 256);
+  let y = Math.floor(Math.random() * 256);
+  let z = Math.floor(Math.random() * 256);
+  let randomRGB = 'rgb(' + x +',' + y + ',' + z + ')';
+  if(printQuote()) {
+    document.body.style.backgroundColor = randomRGB;
+  }
+  return randomRGB;
+}
+
+window.setInterval(refresh, 20000);
+
+function refresh() {
+  window.location.reload();
+}
+
+document.getElementById('quote-box').innerHTML = printQuote();
+document.querySelector('main').innerHTML = getRandomColor();
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
