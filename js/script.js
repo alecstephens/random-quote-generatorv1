@@ -59,7 +59,7 @@ function printQuote() {
 
   if(randomQuote.citation) {
     quoteString += `<span class="citation"> ${randomQuote.citation}</span>`;
-  } 
+  }
   
   if(randomQuote.year) {
     quoteString += `<span class="year"> ${randomQuote.year}</span>`;
@@ -71,8 +71,10 @@ function printQuote() {
 
     quoteString += '</p>';
 
-  return quoteString
+    document.getElementById('quote-box').innerHTML = quoteString;
 }
+
+printQuote();
 
 function getRandomColor() {
   let x = Math.floor(Math.random() * 256);
@@ -82,8 +84,10 @@ function getRandomColor() {
   if(printQuote()) {
     document.body.style.backgroundColor = randomRGB;
   }
-  return randomRGB;
+  document.querySelector('body').style.backgroundColor = randomRGB;
 }
+
+getRandomColor();
 
 window.setInterval(refresh, 20000);
 
@@ -91,11 +95,10 @@ function refresh() {
   window.location.reload();
 }
 
-document.getElementById('quote-box').innerHTML = printQuote();
-document.querySelector('main').innerHTML = getRandomColor();
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
 ***/
 
 document.getElementById('load-quote').addEventListener("click", printQuote, false);
+document.getElementById('load-quote').addEventListener("click", getRandomColor, false); 
